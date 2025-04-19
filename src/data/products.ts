@@ -79,7 +79,7 @@ export const products: Product[] = [
     category: 'gifts',
     price: 1500,
     images: [
-      '/images/admin_product/hijab bouquets.png'
+      '/images/admin_product/hijabbouquets.png'
     ],
     sizes: [
       { id: 'standard', name: 'Standard', dimensions: '12" arrangement', priceModifier: 0 },
@@ -126,7 +126,7 @@ export const products: Product[] = [
     category: 'hampers',
     price: 2800,
     images: [
-      '/images/admin_product/vanity trooley.png'
+      '/images/admin_product/vanitytrooley.png'
     ],
     sizes: [
       { id: 'standard', name: 'Standard', dimensions: 'Small Trolley', priceModifier: 0 },
@@ -148,8 +148,8 @@ export const products: Product[] = [
     category: 'calligraphy',
     price: 2200,
     images: [
-      '/images/admin_product/arabic calligraphy.png',
-      '/images/admin_product/arabic calligraphy (2).png'
+      '/images/admin_product/arabiccalligraphy.png',
+      '/images/admin_product/arabiccalligraphy1.png'
     ],
     sizes: [
       { id: 'a3', name: 'A3', dimensions: '11.7" x 16.5"', priceModifier: 0 },
@@ -172,12 +172,13 @@ export const products: Product[] = [
     category: 'faceless-art',
     price: 3000,
     images: [
-      '/images/admin_product/faceless portraits (1).png',
-      '/images/admin_product/faceless portraits (2).png',
-      '/images/admin_product/faceless portraits (3).png',
-      '/images/admin_product/faceless portraits (4).png',
-      '/images/admin_product/faceless portraits (5).png',
-      '/images/admin_product/faceless portraits (6).png'
+      '/images/admin_product/facelessportraits1.png',
+      '/images/admin_product/facelessportraits2.png',
+      '/images/admin_product/facelessportraits3.png',
+      '/images/admin_product/facelessportraits4.png',
+      '/images/admin_product/facelessportraits5.png',
+      '/images/admin_product/facelessportraits6.png',
+  
     ],
     sizes: [
       { id: 'small', name: 'Small', dimensions: '8" x 10"', priceModifier: 0 },
@@ -202,7 +203,7 @@ export const products: Product[] = [
     category: 'gifts',
     price: 2000,
     images: [
-      '/images/admin_product/custom gifts.png'
+      '/images/admin_product/customgifts.png'
     ],
     sizes: [],
     colors: [],
