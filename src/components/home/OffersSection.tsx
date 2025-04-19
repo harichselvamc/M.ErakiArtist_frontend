@@ -20,22 +20,22 @@ import { offers } from '../../data/offers';
 
 const badgeTypes = [
   {
-    icon: <Flame className="w-4 h-4 mr-1 text-red-600" />,
+    icon: <Flame className="w-5 h-5 mr-1 text-red-600" />,
     label: 'Hot Deal',
     color: 'bg-gradient-to-br from-red-50 to-red-100 text-red-700 border border-red-200',
   },
   {
-    icon: <Star className="w-4 h-4 mr-1 text-yellow-600" />,
+    icon: <Star className="w-5 h-5 mr-1 text-yellow-600" />,
     label: 'Top Pick',
     color: 'bg-gradient-to-br from-yellow-50 to-yellow-100 text-yellow-700 border border-yellow-200',
   },
   {
-    icon: <Zap className="w-4 h-4 mr-1 text-blue-600" />,
+    icon: <Zap className="w-5 h-5 mr-1 text-blue-600" />,
     label: 'Limited Time',
     color: 'bg-gradient-to-br from-blue-50 to-blue-100 text-blue-700 border border-blue-200',
   },
   {
-    icon: <BadgeCheck className="w-4 h-4 mr-1 text-green-600" />,
+    icon: <BadgeCheck className="w-5 h-5 mr-1 text-green-600" />,
     label: 'Best Value',
     color: 'bg-gradient-to-br from-green-50 to-green-100 text-green-700 border border-green-200',
   },
@@ -160,25 +160,28 @@ Please contact me to discuss further.`,
               viewport={{ once: true }}
               whileTap={{ scale: 0.98 }}
             >
-              {/* Discount Ribbon - Made Larger and More Visible */}
+              {/* Super Prominent Discount Ribbon */}
               {offer.discountPercentage && (
-                <div className="absolute -top-4 -right-4 bg-gradient-to-br from-green-500 to-emerald-600 text-white text-lg font-bold px-5 py-2 rounded-full shadow-xl z-10 transform rotate-12 flex items-center">
-                  <Percent className="w-5 h-5 mr-1.5 text-white" />
-                  <span className="text-lg font-extrabold">{offer.discountPercentage}% OFF</span>
+                <div className="absolute -top-5 -right-5 bg-gradient-to-br from-green-500 to-emerald-600 text-white text-xl font-extrabold px-6 py-3 rounded-full shadow-2xl z-10 transform rotate-12 flex items-center">
+                  <div className="relative">
+                    <Percent className="w-6 h-6 mr-2 text-white" />
+                    <div className="absolute -inset-1 bg-white/20 rounded-full blur-sm"></div>
+                  </div>
+                  <span className="text-xl font-black">{offer.discountPercentage}% OFF</span>
                 </div>
               )}
 
               {/* Marketing Badge */}
               <div
-                className={`absolute top-4 left-4 text-xs font-bold px-3 py-1.5 rounded-full flex items-center shadow-lg ${badgeTypes[i % badgeTypes.length].color} z-10`}
+                className={`absolute top-4 left-4 text-sm font-bold px-3 py-2 rounded-full flex items-center shadow-lg ${badgeTypes[i % badgeTypes.length].color} z-10`}
               >
                 {badgeTypes[i % badgeTypes.length].icon}
                 {badgeTypes[i % badgeTypes.length].label}
               </div>
 
-              {/* Image - Increased Size */}
-              <div className="relative h-80 overflow-hidden rounded-t-xl">
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent z-0"></div>
+              {/* Image - Larger Container */}
+              <div className="relative h-[22rem] overflow-hidden rounded-t-xl">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent z-0"></div>
                 <img
                   src={offer.image}
                   alt={offer.title}
@@ -188,9 +191,9 @@ Please contact me to discuss further.`,
                   }}
                 />
                 {offer.validUntil && (
-                  <div className="absolute bottom-3 left-3 bg-white/90 px-3 py-1.5 rounded-lg text-sm flex items-center shadow-sm">
-                    <Calendar className="w-4 h-4 mr-1.5 text-gray-600" />
-                    <span className="text-gray-700 font-medium">
+                  <div className="absolute bottom-4 left-4 bg-white/90 px-4 py-2 rounded-lg text-sm flex items-center shadow-md">
+                    <Calendar className="w-5 h-5 mr-2 text-gray-600" />
+                    <span className="text-gray-700 font-semibold">
                       Until {new Date(offer.validUntil).toLocaleDateString()}
                     </span>
                   </div>
