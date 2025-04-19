@@ -89,7 +89,7 @@ const OrderForm: React.FC<OrderFormProps> = ({ product }) => {
         formData.append('file', paymentScreenshot);
         
         // Upload the file
-        const uploadResponse = await fetch('/api/upload', {
+        const uploadResponse = await fetch('https://m-erakiartist-backend.onrender.com/api/upload', {
           method: 'POST',
           body: formData,
         });
@@ -117,7 +117,7 @@ const OrderForm: React.FC<OrderFormProps> = ({ product }) => {
       };
 
       // Send the order data to your backend API
-      const response = await fetch('/api/send-order-confirmation', {
+      const response = await fetch('https://m-erakiartist-backend.onrender.com/api/send-order-confirmation', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
