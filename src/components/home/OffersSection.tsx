@@ -110,16 +110,17 @@ Please contact me to discuss further.`,
     }),
     hover: {
       y: -8,
-      boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+      boxShadow:
+        '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
     },
   };
 
   return (
-    <section className="py-20 min-h-screen bg-gradient-to-b from-gray-50 to-white">
+    <section className="py-20 min-h-screen bg-gradient-to-b from-gray-900 to-black">
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-16">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
@@ -128,21 +129,25 @@ Please contact me to discuss further.`,
             <Sparkles className="w-5 h-5 mr-2 text-white" />
             <span className="text-sm font-semibold text-white">Exclusive Offers</span>
           </motion.div>
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-4xl md:text-5xl font-bold text-gray-900 mb-4"
+            className="text-4xl md:text-5xl font-bold text-white mb-4"
           >
-            Premium <span className="bg-gradient-to-r from-pink-600 to-blue-600 bg-clip-text text-transparent">Bulk Deals</span>
+            Premium{' '}
+            <span className="bg-gradient-to-r from-pink-400 to-blue-400 bg-clip-text text-transparent">
+              Bulk Deals
+            </span>
           </motion.h2>
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-lg text-gray-600 max-w-3xl mx-auto"
+            className="text-lg text-gray-300 max-w-3xl mx-auto"
           >
-            Limited-time exclusive offers for weddings, corporate events and special occasions. Save big when you order in bulk!
+            Limited-time exclusive offers for weddings, corporate events and special
+            occasions. Save big when you order in bulk!
           </motion.p>
         </div>
 
@@ -151,7 +156,7 @@ Please contact me to discuss further.`,
           {offers.map((offer, i) => (
             <motion.div
               key={offer.id}
-              className="mt-6 bg-white rounded-xl overflow-hidden border border-gray-200 shadow-lg hover:shadow-2xl transition-all duration-300 relative group"
+              className="mt-6 bg-gray-800 rounded-xl overflow-hidden border border-gray-700 shadow-lg hover:shadow-2xl transition-all duration-300 relative group"
               custom={i}
               initial="hidden"
               whileInView="visible"
@@ -160,70 +165,64 @@ Please contact me to discuss further.`,
               viewport={{ once: true }}
               whileTap={{ scale: 0.98 }}
             >
-              {/* Super Prominent Discount Ribbon */}
-              {offer.discountPercentage && (
-                <div className="absolute -top-5 -right-5 bg-gradient-to-br from-green-500 to-emerald-600 text-white text-xl font-extrabold px-6 py-3 rounded-full shadow-2xl z-10 transform rotate-12 flex items-center">
-                  <div className="relative">
-                    <Percent className="w-6 h-6 mr-2 text-white" />
-                    <div className="absolute -inset-1 bg-white/20 rounded-full blur-sm"></div>
-                  </div>
-                  <span className="text-xl font-black">{offer.discountPercentage}% OFF</span>
-                </div>
-              )}
-
               {/* Marketing Badge */}
               <div
-                className={`absolute top-4 left-4 text-sm font-bold px-3 py-2 rounded-full flex items-center shadow-lg ${badgeTypes[i % badgeTypes.length].color} z-10`}
+                className={`absolute top-4 left-4 text-sm font-bold px-3 py-2 rounded-full flex items-center shadow-lg ${badgeTypes[i % badgeTypes.length].color} z-20`}
               >
                 {badgeTypes[i % badgeTypes.length].icon}
                 {badgeTypes[i % badgeTypes.length].label}
               </div>
 
-              {/* Image - Larger Container */}
-              <div className="relative h-[22rem] overflow-hidden rounded-t-xl">
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent z-0"></div>
+              {/* Enhanced Image Container */}
+              <div className="relative h-[22rem] overflow-hidden rounded-t-xl group">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent z-10"></div>
                 <img
                   src={offer.image}
                   alt={offer.title}
-                  className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110"
+                  className="w-full h-full object-cover object-center filter grayscale group-hover:grayscale-0 transition-all duration-700 ease-in-out scale-105 group-hover:scale-110"
                   onError={(e) => {
                     (e.target as HTMLImageElement).src = '/images/placeholder-offer.jpg';
                   }}
                 />
+                {/* Valid Until */}
                 {offer.validUntil && (
-                  <div className="absolute bottom-4 left-4 bg-white/90 px-4 py-2 rounded-lg text-sm flex items-center shadow-md">
+                  <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-md px-4 py-2 rounded-xl text-sm flex items-center shadow-lg z-20">
                     <Calendar className="w-5 h-5 mr-2 text-gray-600" />
                     <span className="text-gray-700 font-semibold">
                       Until {new Date(offer.validUntil).toLocaleDateString()}
                     </span>
                   </div>
                 )}
+                {/* Title Overlay */}
+                <div className="absolute top-4 right-4 z-20 bg-black/60 px-4 py-2 rounded-xl text-white font-bold text-lg shadow-lg">
+                  {offer.title}
+                </div>
               </div>
 
               {/* Content */}
-              <div className="p-6">
+              <div className="p-6 text-white">
                 <div className="flex justify-between items-start mb-3">
-                  <h3 className="text-xl font-bold text-gray-900">{offer.title}</h3>
+                  <h3 className="text-xl font-bold">{offer.title}</h3>
                   {offer.pricePerUnit && (
-                    <div className="text-xl font-bold text-gray-900 bg-gray-100 px-3 py-1 rounded-lg">
+                    <div className="text-xl font-bold bg-gray-700 px-3 py-1 rounded-lg">
                       ₹{offer.pricePerUnit.toLocaleString()}
-                      <span className="text-sm font-normal text-gray-500">/unit</span>
+                      <span className="text-sm font-normal text-gray-300">/unit</span>
                     </div>
                   )}
                 </div>
-                
-                <p className="text-gray-600 mb-5">{offer.description}</p>
+
+                <p className="text-gray-300 mb-5">{offer.description}</p>
 
                 {offer.bestFor && (
                   <div className="mb-5">
-                    <div className="flex items-center text-sm text-gray-500 mb-2">
-                      <Package className="w-5 h-5 mr-2 text-pink-500" />
+                    <div className="flex items-center text-sm text-pink-300 mb-2">
+                      <Package className="w-5 h-5 mr-2" />
                       <span className="font-medium">Perfect for:</span>
                     </div>
                     <ul className="space-y-2">
                       {offer.bestFor.map((item, idx) => (
-                        <li key={idx} className="flex items-center text-sm text-gray-700">
-                          <span className="w-2 h-2 rounded-full bg-pink-500 mr-2"></span>
+                        <li key={idx} className="flex items-center text-sm text-gray-300">
+                          <span className="w-2 h-2 rounded-full bg-pink-400 mr-2"></span>
                           {item}
                         </li>
                       ))}
@@ -232,9 +231,9 @@ Please contact me to discuss further.`,
                 )}
 
                 {offer.minQuantity && (
-                  <div className="flex items-center bg-gray-100 px-4 py-2 rounded-lg mb-5">
-                    <Users className="w-5 h-5 mr-2 text-gray-600" />
-                    <span className="text-sm font-medium text-gray-700">
+                  <div className="flex items-center bg-gray-700 px-4 py-2 rounded-lg mb-5">
+                    <Users className="w-5 h-5 mr-2 text-gray-300" />
+                    <span className="text-sm font-medium">
                       Minimum order: {offer.minQuantity} units
                     </span>
                   </div>
@@ -254,17 +253,18 @@ Please contact me to discuss further.`,
         </div>
 
         {/* CTA */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
           className="text-center mt-20"
         >
-          <div className="bg-gradient-to-r from-gray-50 to-white p-8 rounded-2xl border border-gray-200 shadow-sm">
-            <h3 className="text-2xl font-bold text-gray-900 mb-3">Need a custom solution?</h3>
-            <p className="text-gray-600 mb-6 max-w-2xl mx-auto text-lg">
-              We specialize in creating personalized offers tailored to your specific requirements and budget.
+          <div className="bg-gray-800 p-8 rounded-2xl border border-gray-700 shadow-xl">
+            <h3 className="text-2xl font-bold text-white mb-3">Need a custom solution?</h3>
+            <p className="text-gray-300 mb-6 max-w-2xl mx-auto text-lg">
+              We specialize in creating personalized offers tailored to your specific
+              requirements and budget.
             </p>
             <button
               className="bg-gradient-to-r from-pink-600 to-pink-500 hover:from-pink-700 hover:to-pink-600 text-white py-4 px-10 rounded-full shadow-lg transition-all duration-300 font-semibold text-lg tracking-wide hover:shadow-xl hover:scale-105"
