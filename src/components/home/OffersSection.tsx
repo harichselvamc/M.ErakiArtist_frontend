@@ -147,11 +147,11 @@ Please contact me to discuss further.`,
         </div>
 
         {/* Offers Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
           {offers.map((offer, i) => (
             <motion.div
               key={offer.id}
-              className="mt-6 bg-white rounded-xl overflow-hidden border border-black shadow-sm hover:shadow-md transition-all duration-300 relative group"
+              className="flex flex-col h-full bg-white rounded-xl overflow-hidden border border-black shadow-sm hover:shadow-md transition-all duration-300 relative group"
               custom={i}
               initial="hidden"
               whileInView="visible"
@@ -190,7 +190,7 @@ Please contact me to discuss further.`,
               </div>
 
               {/* Content */}
-              <div className="p-6">
+              <div className="p-6 flex flex-col h-full">
                 <div className="flex justify-between items-start mb-3">
                   <h3 className="text-xl font-bold">{offer.title}</h3>
                   {offer.pricePerUnit && (
@@ -229,8 +229,9 @@ Please contact me to discuss further.`,
                   </div>
                 )}
 
+                {/* CTA Button aligned to bottom */}
                 <button
-                  className="w-full flex items-center justify-center bg-black text-white py-3 px-6 rounded-lg transition-all duration-300 font-semibold shadow hover:shadow-md"
+                  className="mt-auto w-full flex items-center justify-center bg-black text-white py-3 px-6 rounded-lg transition-all duration-300 font-semibold shadow hover:shadow-md"
                   onClick={() => handleOfferClick(offer)}
                 >
                   <ShoppingCart className="w-5 h-5 mr-2" />
