@@ -5,15 +5,15 @@ import { motion } from 'framer-motion';
 
 const Hero: React.FC = () => {
   return (
-    <section className="relative min-h-screen flex items-center pt-16 overflow-hidden bg-black text-white">
+    <section className="relative min-h-screen flex items-center pt-16 overflow-hidden bg-white text-black">
       {/* Background Image Layer */}
       <div className="absolute inset-0 z-0">
         <img
           src="https://images.pexels.com/photos/6712018/pexels-photo-6712018.jpeg"
           alt="Artistic background"
-          className="w-full h-full object-cover opacity-20 grayscale"
+          className="w-full h-full object-cover opacity-10 grayscale"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-black/90 z-10 backdrop-blur-sm" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/95 to-white z-10" />
       </div>
 
       {/* Content */}
@@ -21,7 +21,7 @@ const Hero: React.FC = () => {
         <div className="max-w-3xl mx-auto text-center">
           {/* Title */}
           <motion.h1
-            className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 tracking-tight text-white drop-shadow-lg"
+            className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 tracking-tight text-black drop-shadow"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
@@ -32,7 +32,7 @@ const Hero: React.FC = () => {
 
           {/* Subtitle */}
           <motion.p
-            className="text-lg text-gray-300 mb-8 leading-relaxed"
+            className="text-lg text-gray-700 mb-8 leading-relaxed"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -50,7 +50,7 @@ const Hero: React.FC = () => {
           >
             <a
               href="#products"
-              className="inline-flex items-center px-6 py-3 bg-white text-black font-medium rounded-full transition-all duration-300 hover:bg-black hover:text-white border border-white"
+              className="inline-flex items-center px-6 py-3 bg-black text-white font-medium rounded-full transition-all duration-300 hover:bg-white hover:text-black border border-black"
             >
               <Brush className="w-4 h-4 mr-2" />
               Explore Our Art
@@ -58,7 +58,7 @@ const Hero: React.FC = () => {
 
             <Link
               to="/contact"
-              className="inline-flex items-center px-6 py-3 border border-white text-white font-medium rounded-full hover:bg-white hover:text-black transition-all duration-300"
+              className="inline-flex items-center px-6 py-3 border border-black text-black font-medium rounded-full hover:bg-black hover:text-white transition-all duration-300"
             >
               Contact Us
               <ChevronRight className="w-4 h-4 ml-2" />
@@ -71,7 +71,7 @@ const Hero: React.FC = () => {
       <div className="absolute bottom-10 left-0 right-0 flex justify-center z-20">
         <a
           href="#products"
-          className="text-white opacity-50 hover:opacity-100 transition-opacity animate-bounce"
+          className="text-black opacity-50 hover:opacity-100 transition-opacity animate-bounce"
           aria-label="Scroll down"
         >
           <ChevronRight className="w-8 h-8 transform rotate-90" />
