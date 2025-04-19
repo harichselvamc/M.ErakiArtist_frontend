@@ -1,14 +1,37 @@
 import React from 'react';
-import { ArrowRight, ShoppingCart, Percent, Calendar, Package, Users, Sparkles, Flame, Star, AlarmClock } from 'lucide-react';
+import {
+  ArrowRight,
+  ShoppingCart,
+  Percent,
+  Calendar,
+  Package,
+  Users,
+  Sparkles,
+  Flame,
+  Star,
+  AlarmClock,
+} from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Offer } from '../../types';
 import { offers } from '../../data/offers';
 
 const badgeTypes = [
-  { icon: <Flame className="w-3 h-3 mr-1 text-red-600" />, label: 'Hot Deal', color: 'bg-red-100 text-red-700' },
-  { icon: <Star className="w-3 h-3 mr-1 text-yellow-500" />, label: 'Top Pick', color: 'bg-yellow-100 text-yellow-700' },
-  { icon: <AlarmClock className="w-3 h-3 mr-1 text-blue-500" />, label: 'Limited Time', color: 'bg-blue-100 text-blue-700' }
+  {
+    icon: <Flame className="w-3 h-3 mr-1 text-red-600" />,
+    label: 'Hot Deal',
+    color: 'bg-red-100 text-red-700',
+  },
+  {
+    icon: <Star className="w-3 h-3 mr-1 text-yellow-500" />,
+    label: 'Top Pick',
+    color: 'bg-yellow-100 text-yellow-700',
+  },
+  {
+    icon: <AlarmClock className="w-3 h-3 mr-1 text-blue-500" />,
+    label: 'Limited Time',
+    color: 'bg-blue-100 text-blue-700',
+  },
 ];
 
 const OffersSection: React.FC = () => {
@@ -16,7 +39,9 @@ const OffersSection: React.FC = () => {
 
   const handleOfferClick = (offer: Offer) => {
     const productList = offer.applicableProducts?.join(', ') || 'your selected products';
-    const discountInfo = offer.discountPercentage ? `${offer.discountPercentage}% discount` : 'special price';
+    const discountInfo = offer.discountPercentage
+      ? `${offer.discountPercentage}% discount`
+      : 'special price';
 
     const defaultMessage = `I'm interested in your "${offer.title}" offer (${discountInfo}). Please provide more details about:
 
@@ -36,9 +61,9 @@ Additional notes or special requests:`;
           subject: `Bulk Order Inquiry: ${offer.title}`,
           message: defaultMessage,
           offerId: offer.id,
-          isBulkOrder: true
-        }
-      }
+          isBulkOrder: true,
+        },
+      },
     });
   };
 
@@ -46,7 +71,7 @@ Additional notes or special requests:`;
     navigate('/contact', {
       state: {
         prefill: {
-          subject: "Custom Bulk Order Request",
+          subject: 'Custom Bulk Order Request',
           message: `I would like to discuss a custom bulk order solution. Here are my requirements:
 
 - Product type:
@@ -58,9 +83,9 @@ Additional notes or special requests:`;
 - Delivery deadline:
 
 Please contact me to discuss further.`,
-          isBulkOrder: true
-        }
-      }
+          isBulkOrder: true,
+        },
+      },
     });
   };
 
@@ -73,17 +98,17 @@ Please contact me to discuss further.`,
         delay: i * 0.15,
         duration: 0.6,
         type: 'spring',
-        stiffness: 100
-      }
+        stiffness: 100,
+      },
     }),
     hover: {
       y: -5,
-      boxShadow: '0 10px 20px rgba(0,0,0,0.1)'
-    }
+      boxShadow: '0 10px 20px rgba(0,0,0,0.1)',
+    },
   };
 
   return (
-    <section className="py-16 bg-gray-50">
+    <section className="py-20 min-h-screen bg-gray-50">
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-12">
@@ -104,7 +129,7 @@ Please contact me to discuss further.`,
           {offers.map((offer, i) => (
             <motion.div
               key={offer.id}
-              className="bg-white rounded-2xl overflow-hidden border border-gray-200 shadow-lg hover:shadow-xl transition-shadow duration-300 relative"
+              className="mt-6 bg-white rounded-2xl overflow-hidden border border-gray-200 shadow-lg hover:shadow-xl transition-shadow duration-300 relative"
               custom={i}
               initial="hidden"
               whileInView="visible"
@@ -115,24 +140,26 @@ Please contact me to discuss further.`,
             >
               {/* Discount Ribbon */}
               {offer.discountPercentage && (
-                <div className="absolute -top-3 -right-3 bg-gradient-to-br from-green-500 to-emerald-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg z-10 transform rotate-6">
+                <div className="absolute -top-4 -right-4 bg-gradient-to-br from-green-500 to-emerald-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg z-10 transform rotate-6">
                   <Percent className="w-3 h-3 inline-block mr-1" />
                   {offer.discountPercentage}% OFF
                 </div>
               )}
 
               {/* Marketing Badge */}
-              <div className={`absolute top-4 left-4 text-xs font-semibold px-2 py-1 rounded flex items-center shadow-md ${badgeTypes[i % badgeTypes.length].color}`}>
+              <div
+                className={`absolute top-4 left-4 text-xs font-semibold px-2 py-1 rounded flex items-center shadow-md ${badgeTypes[i % badgeTypes.length].color}`}
+              >
                 {badgeTypes[i % badgeTypes.length].icon}
                 {badgeTypes[i % badgeTypes.length].label}
               </div>
 
               {/* Image */}
-              <div className="relative h-48 overflow-hidden">
+              <div className="relative h-64 overflow-hidden rounded-t-2xl">
                 <img
                   src={offer.image}
                   alt={offer.title}
-                  className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                  className="w-full h-full object-cover object-top transition-transform duration-300 hover:scale-105"
                   onError={(e) => {
                     (e.target as HTMLImageElement).src = '/images/placeholder-offer.jpg';
                   }}
@@ -140,7 +167,9 @@ Please contact me to discuss further.`,
                 {offer.validUntil && (
                   <div className="absolute bottom-2 left-2 bg-white/90 px-2 py-1 rounded text-xs flex items-center">
                     <Calendar className="w-3 h-3 mr-1 text-gray-600" />
-                    <span className="text-gray-700">Until {new Date(offer.validUntil).toLocaleDateString()}</span>
+                    <span className="text-gray-700">
+                      Until {new Date(offer.validUntil).toLocaleDateString()}
+                    </span>
                   </div>
                 )}
               </div>
