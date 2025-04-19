@@ -9,11 +9,13 @@ const ContactPage: React.FC = () => {
   const [message, setMessage] = useState('');
   const [isSending, setIsSending] = useState(false);
   const [statusMessage, setStatusMessage] = useState('');
+  const [statusColor, setStatusColor] = useState<'green' | 'red' | ''>('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSending(true);
     setStatusMessage('');
+    setStatusColor('');
 
     try {
       const response = await fetch('https://m-erakiartist-backend.onrender.com/api/contact', {
@@ -25,16 +27,18 @@ const ContactPage: React.FC = () => {
       const data = await response.json();
       if (response.ok) {
         setStatusMessage('✅ Your message has been sent successfully!');
+        setStatusColor('green');
         setName('');
         setEmail('');
         setSubject('');
         setMessage('');
       } else {
         setStatusMessage(`❌ ${data.message || 'Failed to send message.'}`);
+        setStatusColor('red');
       }
     } catch (error) {
-      setStatusMessage('❌ Failed to send message. Please try again.');
-      console.error(error);
+      setStatusMessage('❌ Something went wrong. Please try again.');
+      setStatusColor('red');
     } finally {
       setIsSending(false);
     }
@@ -51,6 +55,7 @@ const ContactPage: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          {/* Contact Form */}
           <motion.div
             className="bg-white p-8 rounded-lg shadow-sm border border-primary-100"
             initial={{ opacity: 0, x: -20 }}
@@ -63,65 +68,67 @@ const ContactPage: React.FC = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium mb-2">
-                    Your Name<span className="text-red-500">*</span>
+                    Your Name <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
                     className="input-field"
                     placeholder="Enter your name"
-                    required
                     value={name}
                     onChange={(e) => setName(e.target.value)}
+                    required
                   />
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium mb-2">
-                    Your Email<span className="text-red-500">*</span>
+                    Your Email <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="email"
                     className="input-field"
                     placeholder="Enter your email"
-                    required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    required
                   />
                 </div>
               </div>
 
               <div>
                 <label className="block text-sm font-medium mb-2">
-                  Subject<span className="text-red-500">*</span>
+                  Subject <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
                   className="input-field"
                   placeholder="What is this regarding?"
-                  required
                   value={subject}
                   onChange={(e) => setSubject(e.target.value)}
+                  required
                 />
               </div>
 
               <div>
                 <label className="block text-sm font-medium mb-2">
-                  Your Message<span className="text-red-500">*</span>
+                  Your Message <span className="text-red-500">*</span>
                 </label>
                 <textarea
                   className="textarea-field"
                   rows={5}
                   placeholder="Tell us about your project or question..."
-                  required
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
+                  required
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={isSending}
-                className="btn btn-primary w-full flex items-center justify-center"
+                className={`btn btn-primary w-full flex items-center justify-center ${
+                  isSending ? 'cursor-not-allowed opacity-60' : ''
+                }`}
               >
                 {isSending ? 'Sending...' : (
                   <>
@@ -132,11 +139,14 @@ const ContactPage: React.FC = () => {
               </button>
 
               {statusMessage && (
-                <p className="mt-4 text-sm text-center text-gray-700">{statusMessage}</p>
+                <p className={`text-center mt-4 text-sm ${statusColor === 'green' ? 'text-green-600' : 'text-red-600'}`}>
+                  {statusMessage}
+                </p>
               )}
             </form>
           </motion.div>
 
+          {/* Contact Info */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
