@@ -76,7 +76,6 @@ Please contact me to discuss further.`,
     }
   };
 
-  // Add marketing badges to some offers
   const getMarketingBadge = (offer: Offer) => {
     if (offer.discountPercentage && offer.discountPercentage >= 30) {
       return (
@@ -137,10 +136,8 @@ Please contact me to discuss further.`,
               variants={cardVariants}
               viewport={{ once: true }}
             >
-              {/* Marketing Badge */}
               {getMarketingBadge(offer)}
 
-              {/* Discount Badge */}
               {offer.discountPercentage && (
                 <div className={`absolute top-4 right-4 text-white text-xs font-bold px-3 py-1 rounded-full flex items-center z-10
                   ${offer.discountPercentage >= 30 ? 'bg-gradient-to-r from-red-600 to-red-500' : 
@@ -151,7 +148,6 @@ Please contact me to discuss further.`,
                 </div>
               )}
 
-              {/* Image */}
               <div className="relative h-48 overflow-hidden group">
                 <img 
                   src={offer.image} 
@@ -170,7 +166,6 @@ Please contact me to discuss further.`,
                 )}
               </div>
 
-              {/* Content */}
               <div className="p-6">
                 <div className="flex items-start justify-between mb-3">
                   <h3 className="text-xl font-bold text-gray-900">{offer.title}</h3>
