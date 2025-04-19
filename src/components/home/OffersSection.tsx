@@ -160,11 +160,11 @@ Please contact me to discuss further.`,
               viewport={{ once: true }}
               whileTap={{ scale: 0.98 }}
             >
-              {/* Discount Ribbon */}
+              {/* Discount Ribbon - Made Larger and More Visible */}
               {offer.discountPercentage && (
-                <div className="absolute -top-3 -right-3 bg-gradient-to-br from-green-500 to-emerald-600 text-white text-sm font-bold px-4 py-1 rounded-full shadow-xl z-10 transform rotate-12 flex items-center">
-                  <Percent className="w-4 h-4 mr-1 text-white" />
-                  {offer.discountPercentage}% OFF
+                <div className="absolute -top-4 -right-4 bg-gradient-to-br from-green-500 to-emerald-600 text-white text-lg font-bold px-5 py-2 rounded-full shadow-xl z-10 transform rotate-12 flex items-center">
+                  <Percent className="w-5 h-5 mr-1.5 text-white" />
+                  <span className="text-lg font-extrabold">{offer.discountPercentage}% OFF</span>
                 </div>
               )}
 
@@ -176,8 +176,8 @@ Please contact me to discuss further.`,
                 {badgeTypes[i % badgeTypes.length].label}
               </div>
 
-              {/* Image */}
-              <div className="relative h-64 overflow-hidden rounded-t-xl">
+              {/* Image - Increased Size */}
+              <div className="relative h-80 overflow-hidden rounded-t-xl">
                 <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent z-0"></div>
                 <img
                   src={offer.image}
