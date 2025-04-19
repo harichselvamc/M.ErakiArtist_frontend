@@ -173,7 +173,7 @@ Please contact me to discuss further.`,
                 <img
                   src={offer.image}
                   alt={offer.title}
-                  className="w-full h-full object-cover object-center transition-all duration-700 ease-in-out"
+                  className="w-full h-full object-cover object-center filter grayscale group-hover:grayscale-0 transition-all duration-700 ease-in-out scale-105 group-hover:scale-110"
                   onError={(e) => {
                     (e.target as HTMLImageElement).src = '/images/placeholder-offer.jpg';
                   }}
