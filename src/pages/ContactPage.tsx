@@ -1,8 +1,45 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Mail, Phone, MapPin, Send, MessageCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const ContactPage: React.FC = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [subject, setSubject] = useState('');
+  const [message, setMessage] = useState('');
+  const [isSending, setIsSending] = useState(false);
+  const [statusMessage, setStatusMessage] = useState('');
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSending(true);
+    setStatusMessage('');
+
+    try {
+      const response = await fetch('https://m-erakiartist-backend.onrender.com/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, subject, message }),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        setStatusMessage('✅ Your message has been sent successfully!');
+        setName('');
+        setEmail('');
+        setSubject('');
+        setMessage('');
+      } else {
+        setStatusMessage(`❌ ${data.message || 'Failed to send message.'}`);
+      }
+    } catch (error) {
+      setStatusMessage('❌ Failed to send message. Please try again.');
+      console.error(error);
+    } finally {
+      setIsSending(false);
+    }
+  };
+
   return (
     <section className="py-20 bg-white">
       <div className="container-custom max-w-6xl">
@@ -12,78 +49,94 @@ const ContactPage: React.FC = () => {
             We'd love to hear from you! Reach out to us for custom artwork inquiries, quotes, or any questions you might have.
           </p>
         </div>
-        
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          <motion.div 
+          <motion.div
             className="bg-white p-8 rounded-lg shadow-sm border border-primary-100"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
           >
             <h2 className="text-2xl font-display font-semibold mb-6">Get in Touch</h2>
-            
-            <form className="space-y-6">
+
+            <form className="space-y-6" onSubmit={handleSubmit}>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium mb-2">
-                    Your Name
-                    <span className="text-red-500">*</span>
+                    Your Name<span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
                     className="input-field"
                     placeholder="Enter your name"
                     required
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                   />
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium mb-2">
-                    Your Email
-                    <span className="text-red-500">*</span>
+                    Your Email<span className="text-red-500">*</span>
                   </label>
                   <input
                     type="email"
                     className="input-field"
                     placeholder="Enter your email"
                     required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium mb-2">
-                  Subject
-                  <span className="text-red-500">*</span>
+                  Subject<span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
                   className="input-field"
                   placeholder="What is this regarding?"
                   required
+                  value={subject}
+                  onChange={(e) => setSubject(e.target.value)}
                 />
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium mb-2">
-                  Your Message
-                  <span className="text-red-500">*</span>
+                  Your Message<span className="text-red-500">*</span>
                 </label>
                 <textarea
                   className="textarea-field"
                   rows={5}
                   placeholder="Tell us about your project or question..."
                   required
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
                 />
               </div>
-              
-              <button type="submit" className="btn btn-primary w-full">
-                <Send className="w-4 h-4 mr-2" />
-                Send Message
+
+              <button
+                type="submit"
+                disabled={isSending}
+                className="btn btn-primary w-full flex items-center justify-center"
+              >
+                {isSending ? 'Sending...' : (
+                  <>
+                    <Send className="w-4 h-4 mr-2" />
+                    Send Message
+                  </>
+                )}
               </button>
+
+              {statusMessage && (
+                <p className="mt-4 text-sm text-center text-gray-700">{statusMessage}</p>
+              )}
             </form>
           </motion.div>
-          
+
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -91,7 +144,7 @@ const ContactPage: React.FC = () => {
           >
             <div className="bg-primary-950 text-white p-8 rounded-lg mb-8">
               <h2 className="text-2xl font-display font-semibold mb-6">Contact Information</h2>
-              
+
               <ul className="space-y-6">
                 <li className="flex items-start">
                   <Phone className="w-5 h-5 mr-4 mt-1 text-accent-400" />
@@ -100,7 +153,7 @@ const ContactPage: React.FC = () => {
                     <p className="mt-1">+91 7598068106</p>
                   </div>
                 </li>
-                
+
                 <li className="flex items-start">
                   <Mail className="w-5 h-5 mr-4 mt-1 text-accent-400" />
                   <div>
@@ -108,7 +161,7 @@ const ContactPage: React.FC = () => {
                     <p className="mt-1">harichselvamc@gmail.com</p>
                   </div>
                 </li>
-                
+
                 <li className="flex items-start">
                   <MapPin className="w-5 h-5 mr-4 mt-1 text-accent-400" />
                   <div>
@@ -118,13 +171,13 @@ const ContactPage: React.FC = () => {
                 </li>
               </ul>
             </div>
-            
+
             <div className="bg-white p-8 rounded-lg shadow-sm border border-primary-100">
               <h2 className="text-2xl font-display font-semibold mb-6">Quick Connect</h2>
-              
-              <a 
-                href="https://wa.me/7598068106" 
-                target="_blank" 
+
+              <a
+                href="https://wa.me/7598068106"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="bg-[#25D366] text-white rounded-lg p-4 flex items-center hover:bg-[#128C7E] transition-colors"
               >
@@ -134,7 +187,7 @@ const ContactPage: React.FC = () => {
                   <p className="text-sm opacity-90">Usually responds within an hour</p>
                 </div>
               </a>
-              
+
               <div className="mt-6">
                 <h3 className="font-medium mb-3">Business Hours</h3>
                 <ul className="space-y-2 text-primary-600">
