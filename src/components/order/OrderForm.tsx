@@ -6,7 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { useDropzone } from 'react-dropzone';
 import QRCode from 'qrcode.react';
 import { addDays, format } from 'date-fns';
-import { Product, SizeOption, ColorOption, OrderItem } from '../../types';
+import { Product, SizeOption, ColorOption } from '../../types';
 
 interface OrderFormProps {
   product: Product;
@@ -77,18 +77,38 @@ const OrderForm: React.FC<OrderFormProps> = ({ product }) => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Generate a simple order ID (in a real app, this would come from your backend)
+    // Generate a simple order ID
     const orderId = `ORD-${Date.now().toString().slice(-6)}`;
     
     try {
-      // First upload the payment screenshot if it exists
+      // Upload reference images first
+      const referenceImageUrls = [];
+      if (referenceImages.length > 0) {
+        const uploadPromises = referenceImages.map(async (file) => {
+          const formData = new FormData();
+          formData.append('file', file);
+          
+          const uploadResponse = await fetch('https://m-erakiartist-backend.onrender.com/api/upload', {
+            method: 'POST',
+            body: formData,
+          });
+          
+          const uploadData = await uploadResponse.json();
+          if (uploadResponse.ok && uploadData.success) {
+            return uploadData.fileUrl;
+          }
+          throw new Error('Failed to upload reference image');
+        });
+        
+        referenceImageUrls.push(...(await Promise.all(uploadPromises)));
+      }
+
+      // Upload payment screenshot
       let paymentScreenshotUrl = null;
       if (paymentScreenshot) {
-        // Create a FormData object for file upload
         const formData = new FormData();
         formData.append('file', paymentScreenshot);
         
-        // Upload the file
         const uploadResponse = await fetch('https://m-erakiartist-backend.onrender.com/api/upload', {
           method: 'POST',
           body: formData,
@@ -114,6 +134,7 @@ const OrderForm: React.FC<OrderFormProps> = ({ product }) => {
         balanceAmount: totalPrice - advanceAmount,
         text: product.requiresText ? text : undefined,
         notes: notes || 'No additional notes',
+        referenceImages: referenceImageUrls.length > 0 ? referenceImageUrls : undefined,
       };
 
       // Send the order data to your backend API
