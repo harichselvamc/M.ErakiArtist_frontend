@@ -16,7 +16,6 @@ import { useNavigate } from 'react-router-dom';
 import { Offer } from '../../types';
 import { offers } from '../../data/offers';
 
-// Monochrome badge styles
 const badgeTypes = [
   {
     icon: <Flame className="w-5 h-5 mr-1 text-black" />,
@@ -168,18 +167,17 @@ Please contact me to discuss further.`,
               </div>
 
               {/* Image */}
-              <div className="relative h-[22rem] overflow-hidden rounded-t-xl group">
-                <div className="absolute inset-0 bg-gradient-to-t from-white/80 to-transparent z-10" />
+              <div className="relative h-[22rem] overflow-hidden rounded-t-xl">
                 <img
                   src={offer.image}
                   alt={offer.title}
-                  className="w-full h-full object-cover object-center filter grayscale group-hover:grayscale-0 transition-all duration-700 ease-in-out scale-105 group-hover:scale-110"
+                  className="w-full h-full object-cover object-center"
                   onError={(e) => {
                     (e.target as HTMLImageElement).src = '/images/placeholder-offer.jpg';
                   }}
                 />
                 {offer.validUntil && (
-                  <div className="absolute bottom-4 left-4 bg-white/90 px-4 py-2 rounded-xl text-sm flex items-center shadow-sm">
+                  <div className="absolute bottom-4 left-4 bg-white px-4 py-2 rounded-xl text-sm flex items-center shadow-sm">
                     <Calendar className="w-5 h-5 mr-2 text-black" />
                     <span className="font-semibold">
                       Until {new Date(offer.validUntil).toLocaleDateString()}
