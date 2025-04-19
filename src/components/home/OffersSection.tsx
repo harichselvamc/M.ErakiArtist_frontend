@@ -1,12 +1,13 @@
 import React from 'react';
-import { Tag, Clock, ArrowRight, ShoppingCart, Users, Percent, Gift } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { ArrowRight, ShoppingCart, Percent, Calendar, Package, Users, Sparkles } from 'lucide-react';
+import { motion, useAnimation } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Offer } from '../../types';
 import { offers } from '../../data/offers';
 
 const OffersSection: React.FC = () => {
   const navigate = useNavigate();
+  const controls = useAnimation();
 
   const handleOfferClick = (offer: Offer) => {
     const productList = offer.applicableProducts?.join(', ') || 'your selected products';
@@ -36,7 +37,16 @@ Additional notes or special requests:`;
     });
   };
 
-  const handleCustomQuoteClick = () => {
+  const handleCustomQuoteClick = async () => {
+    await controls.start({
+      scale: 0.95,
+      transition: { duration: 0.1 }
+    });
+    await controls.start({
+      scale: 1,
+      transition: { duration: 0.3, type: 'spring' }
+    });
+    
     navigate('/contact', {
       state: {
         prefill: {
@@ -58,69 +68,114 @@ Please contact me to discuss further.`,
     });
   };
 
+  const cardVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: i * 0.15,
+        duration: 0.6,
+        type: 'spring',
+        stiffness: 100
+      }
+    }),
+    hover: {
+      y: -10,
+      boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'
+    }
+  };
+
   return (
-    <section className="py-24 bg-gradient-to-b from-primary-50/30 to-white relative overflow-hidden">
-      {/* Decorative elements */}
-      <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
-        <div className="absolute top-20 -left-20 w-64 h-64 rounded-full bg-accent-100/30 blur-3xl"></div>
-        <div className="absolute bottom-10 -right-20 w-80 h-80 rounded-full bg-primary-100/20 blur-3xl"></div>
+    <section className="relative py-28 overflow-hidden bg-[#fafafa]">
+      {/* Glow effects */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-20 -left-20 w-96 h-96 rounded-full bg-[#fff0f0] blur-3xl opacity-30"></div>
+        <div className="absolute -bottom-40 -right-40 w-[800px] h-[800px] rounded-full bg-[#f0f5ff] blur-3xl opacity-30"></div>
+      </div>
+
+      {/* Floating particles */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {[...Array(20)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute rounded-full bg-accent-500/10"
+            initial={{
+              x: Math.random() * 100,
+              y: Math.random() * 100,
+              width: Math.random() * 10 + 5,
+              height: Math.random() * 10 + 5,
+              opacity: Math.random() * 0.3 + 0.1
+            }}
+            animate={{
+              y: [null, (Math.random() - 0.5) * 50],
+              transition: {
+                duration: Math.random() * 10 + 10,
+                repeat: Infinity,
+                repeatType: 'reverse',
+                ease: 'easeInOut'
+              }
+            }}
+          />
+        ))}
       </div>
 
       <div className="container-custom relative z-10">
-        <div className="mb-16 text-center px-4">
-          <motion.div 
-            className="inline-flex items-center justify-center bg-accent-100/20 rounded-full px-6 py-2 mb-4"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+        <motion.div 
+          className="text-center mb-20"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true, margin: "-100px" }}
+        >
+          <motion.div
+            className="inline-flex items-center justify-center px-6 py-2.5 rounded-full bg-white shadow-sm border border-gray-100 mb-6"
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <Gift className="w-5 h-5 mr-2 text-accent-600" />
-            <span className="text-sm font-medium text-accent-600">Special Offers</span>
+            <Sparkles className="w-5 h-5 mr-2 text-accent-500" />
+            <span className="text-sm font-medium text-gray-700">Exclusive Offers</span>
           </motion.div>
-          
-          <motion.h2 
-            className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 font-display"
+
+          <motion.h2
+            className="text-5xl md:text-6xl font-bold text-gray-900 mb-5 font-display bg-clip-text text-transparent bg-gradient-to-r from-gray-800 to-gray-600"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
+            transition={{ delay: 0.3, duration: 0.6 }}
             viewport={{ once: true }}
           >
-            Exclusive Bulk <span className="text-accent-600">Offers</span>
+            Premium Bulk Deals
           </motion.h2>
-          
-          <motion.p 
-            className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed"
+
+          <motion.p
+            className="text-xl text-gray-500 max-w-3xl mx-auto leading-relaxed"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
             viewport={{ once: true }}
           >
-            Discover our limited-time special packages and volume discounts perfect for weddings, corporate events, and special occasions.
+            Elevate your events with our exclusive bulk packages, designed for discerning clients who appreciate quality and value.
           </motion.p>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-4">
-          {offers.map((offer, index) => (
-            <motion.div 
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {offers.map((offer, i) => (
+            <motion.div
               key={offer.id}
-              className="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300 border border-gray-100 flex flex-col transform hover:-translate-y-2"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ 
-                duration: 0.5, 
-                delay: index * 0.1,
-                type: "spring",
-                stiffness: 100,
-                damping: 10
-              }}
-              viewport={{ once: true }}
-              whileHover={{ scale: 1.02 }}
+              className="relative bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300"
+              custom={i}
+              initial="hidden"
+              whileInView="visible"
+              whileHover="hover"
+              variants={cardVariants}
+              viewport={{ once: true, margin: "-50px" }}
             >
-              {/* Offer Ribbon */}
+              {/* Ribbon */}
               {offer.discountPercentage && (
-                <div className="absolute top-0 right-0 w-32 overflow-hidden h-32 z-10">
-                  <div className="absolute top-0 right-0 w-32 h-8 bg-accent-600 transform rotate-45 translate-y-4 translate-x-8 flex items-center justify-center">
+                <div className="absolute top-0 right-0 w-28 h-28 overflow-hidden z-10">
+                  <div className="absolute top-0 right-0 w-40 h-8 bg-accent-500 transform rotate-45 translate-y-4 translate-x-6 flex items-center justify-center shadow-sm">
                     <span className="text-xs font-bold text-white flex items-center">
                       <Percent className="w-3 h-3 mr-1" />
                       {offer.discountPercentage}% OFF
@@ -128,99 +183,112 @@ Please contact me to discuss further.`,
                   </div>
                 </div>
               )}
-              
-              {/* Image Section */}
+
+              {/* Image */}
               <div className="relative h-64 overflow-hidden group">
-                <img 
-                  src={offer.image} 
-                  alt={offer.title} 
-                  className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
+                <motion.img
+                  src={offer.image}
+                  alt={offer.title}
+                  className="w-full h-full object-cover"
+                  initial={{ scale: 1 }}
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ duration: 0.4 }}
                   onError={(e) => {
                     (e.target as HTMLImageElement).src = '/images/placeholder-offer.jpg';
                   }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-black/10 to-transparent" />
                 
-                {/* Expiry Badge */}
+                {/* Expiry */}
                 {offer.validUntil && (
-                  <div className="absolute bottom-4 left-4 text-white text-xs flex items-center bg-black/60 px-3 py-1.5 rounded-full backdrop-blur-sm">
-                    <Clock className="w-3 h-3 mr-1.5" />
-                    <span>Until {new Date(offer.validUntil).toLocaleDateString()}</span>
+                  <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-xs flex items-center">
+                    <Calendar className="w-4 h-4 mr-1.5 text-gray-600" />
+                    <span className="text-xs font-medium text-gray-700">
+                      Until {new Date(offer.validUntil).toLocaleDateString()}
+                    </span>
                   </div>
                 )}
               </div>
-              
-              {/* Content Section */}
-              <div className="p-6 flex-grow flex flex-col">
-                <div className="flex-grow">
-                  <h3 className="font-display text-2xl font-bold mb-3 text-gray-900">{offer.title}</h3>
-                  <p className="text-gray-600 mb-5 leading-relaxed">{offer.description}</p>
-                  
-                  {offer.bestFor && offer.bestFor.length > 0 && (
-                    <div className="mb-5">
-                      <h4 className="font-medium mb-2.5 text-gray-800 flex items-center">
-                        <span className="w-2 h-2 rounded-full bg-accent-600 mr-2"></span>
-                        Ideal For
-                      </h4>
-                      <ul className="space-y-2 text-sm text-gray-600">
-                        {offer.bestFor.map((useCase, i) => (
-                          <li key={i} className="flex items-center">
-                            <span className="w-1.5 h-1.5 rounded-full bg-accent-600 mr-2.5"></span>
-                            {useCase}
-                          </li>
-                        ))}
-                      </ul>
+
+              {/* Content */}
+              <div className="p-6">
+                <div className="flex items-start justify-between mb-4">
+                  <h3 className="text-2xl font-bold text-gray-900">{offer.title}</h3>
+                  {offer.pricePerUnit && (
+                    <div className="text-right">
+                      <span className="text-sm text-gray-500 block">From</span>
+                      <span className="text-xl font-bold text-gray-900">
+                        ₹{offer.pricePerUnit.toLocaleString()}
+                      </span>
                     </div>
                   )}
                 </div>
-                
-                {/* Footer Section */}
-                <div className="mt-auto pt-5 border-t border-gray-100">
-                  <div className="flex items-center justify-between mb-5">
-                    {offer.minQuantity && (
-                      <div className="flex items-center text-sm text-gray-600 bg-gray-50 px-3 py-1.5 rounded-full">
-                        <Users className="w-4 h-4 mr-1.5 text-gray-500" />
-                        <span>Min. {offer.minQuantity}</span>
-                      </div>
-                    )}
-                    {offer.pricePerUnit && (
-                      <div className="text-gray-900 font-bold text-lg">
-                        ₹{offer.pricePerUnit.toLocaleString()}<span className="text-sm font-medium text-gray-500">/unit</span>
-                      </div>
-                    )}
+
+                <p className="text-gray-500 mb-6 leading-relaxed">{offer.description}</p>
+
+                <div className="mb-6">
+                  <div className="flex items-center text-sm text-gray-500 mb-3">
+                    <Package className="w-4 h-4 mr-2" />
+                    <span className="font-medium">Includes:</span>
                   </div>
-                  
-                  <button 
-                    className="w-full flex items-center justify-center bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-600 hover:to-accent-700 text-white py-3.5 px-6 rounded-xl transition-all duration-300 font-medium shadow-md hover:shadow-lg"
-                    onClick={() => handleOfferClick(offer)}
-                  >
-                    <ShoppingCart className="w-5 h-5 mr-2.5" />
-                    Get This Offer
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </button>
+                  <ul className="space-y-2">
+                    {offer.bestFor?.map((item, idx) => (
+                      <li key={idx} className="flex items-center">
+                        <div className="w-1.5 h-1.5 rounded-full bg-accent-500 mr-3"></div>
+                        <span className="text-sm text-gray-600">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
+
+                <div className="flex items-center justify-between mb-6">
+                  {offer.minQuantity && (
+                    <div className="flex items-center text-sm bg-gray-50 px-3 py-1.5 rounded-full">
+                      <Users className="w-4 h-4 mr-2 text-gray-500" />
+                      <span className="text-gray-600">Min. {offer.minQuantity}</span>
+                    </div>
+                  )}
+                </div>
+
+                <motion.button
+                  className="w-full flex items-center justify-center bg-gray-900 hover:bg-gray-800 text-white py-3.5 px-6 rounded-xl transition-all duration-300 font-medium group"
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => handleOfferClick(offer)}
+                >
+                  <span className="relative z-10 flex items-center">
+                    <ShoppingCart className="w-5 h-5 mr-3" />
+                    Get Offer
+                  </span>
+                  <span className="absolute inset-0 bg-gradient-to-r from-gray-800 to-gray-700 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                </motion.button>
               </div>
             </motion.div>
           ))}
         </div>
-        
-        <motion.div 
-          className="mt-20 text-center px-4"
+
+        <motion.div
+          className="mt-20 text-center"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
+          transition={{ delay: 0.5, duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <p className="text-gray-600 mb-6 max-w-2xl mx-auto text-lg leading-relaxed">
-            Don't see what you're looking for? We specialize in custom bulk solutions tailored to your exact needs.
+          <p className="text-gray-500 mb-6 max-w-2xl mx-auto text-lg leading-relaxed">
+            Need something beyond our standard offers? Let's create a custom solution just for you.
           </p>
-          <button 
-            className="btn btn-primary mx-auto group"
+          <motion.button
+            className="relative inline-flex items-center justify-center px-8 py-4 rounded-xl bg-gradient-to-r from-accent-500 to-accent-600 text-white font-medium shadow-lg overflow-hidden group"
+            animate={controls}
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
             onClick={handleCustomQuoteClick}
           >
-            <span className="relative z-10">Request Custom Quote</span>
-            <span className="absolute inset-0 bg-gradient-to-r from-primary-600 to-primary-700 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-          </button>
+            <span className="relative z-10 flex items-center">
+              <Sparkles className="w-5 h-5 mr-3" />
+              Request Custom Quote
+            </span>
+            <span className="absolute inset-0 bg-gradient-to-r from-accent-600 to-accent-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+          </motion.button>
         </motion.div>
       </div>
     </section>
