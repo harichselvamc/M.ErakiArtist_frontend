@@ -55,7 +55,7 @@ export const products: Product[] = [
     category: 'name-boards',
     price: 1800,
     images: [
-      '/images/admin_product/arabic name board.png'
+      '/images/admin_product/arabicnameboard.png'
     ],
     sizes: [
       { id: 'small', name: 'Small', dimensions: '10" x 12"', priceModifier: 0 },
