@@ -10,6 +10,8 @@ import {
   Flame,
   Star,
   AlarmClock,
+  Zap,
+  BadgeCheck,
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
@@ -18,19 +20,24 @@ import { offers } from '../../data/offers';
 
 const badgeTypes = [
   {
-    icon: <Flame className="w-3 h-3 mr-1 text-red-600" />,
+    icon: <Flame className="w-4 h-4 mr-1 text-red-600" />,
     label: 'Hot Deal',
-    color: 'bg-red-100 text-red-700',
+    color: 'bg-gradient-to-br from-red-50 to-red-100 text-red-700 border border-red-200',
   },
   {
-    icon: <Star className="w-3 h-3 mr-1 text-yellow-500" />,
+    icon: <Star className="w-4 h-4 mr-1 text-yellow-600" />,
     label: 'Top Pick',
-    color: 'bg-yellow-100 text-yellow-700',
+    color: 'bg-gradient-to-br from-yellow-50 to-yellow-100 text-yellow-700 border border-yellow-200',
   },
   {
-    icon: <AlarmClock className="w-3 h-3 mr-1 text-blue-500" />,
+    icon: <Zap className="w-4 h-4 mr-1 text-blue-600" />,
     label: 'Limited Time',
-    color: 'bg-blue-100 text-blue-700',
+    color: 'bg-gradient-to-br from-blue-50 to-blue-100 text-blue-700 border border-blue-200',
+  },
+  {
+    icon: <BadgeCheck className="w-4 h-4 mr-1 text-green-600" />,
+    label: 'Best Value',
+    color: 'bg-gradient-to-br from-green-50 to-green-100 text-green-700 border border-green-200',
   },
 ];
 
@@ -102,26 +109,41 @@ Please contact me to discuss further.`,
       },
     }),
     hover: {
-      y: -5,
-      boxShadow: '0 10px 20px rgba(0,0,0,0.1)',
+      y: -8,
+      boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
     },
   };
 
   return (
-    <section className="py-20 min-h-screen bg-gray-50">
+    <section className="py-20 min-h-screen bg-gradient-to-b from-gray-50 to-white">
       <div className="container mx-auto px-4">
         {/* Header */}
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center bg-white px-4 py-2 rounded-full shadow-sm border border-gray-200 mb-4">
-            <Sparkles className="w-5 h-5 mr-2 text-yellow-500" />
-            <span className="text-sm font-medium text-gray-700">Special Offers</span>
-          </div>
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
-            Exclusive Bulk Deals
-          </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Discover our limited-time offers for weddings, corporate events and special occasions
-          </p>
+        <div className="text-center mb-16">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="inline-flex items-center bg-gradient-to-r from-pink-500 to-pink-600 px-6 py-2 rounded-full shadow-lg mb-6"
+          >
+            <Sparkles className="w-5 h-5 mr-2 text-white" />
+            <span className="text-sm font-semibold text-white">Exclusive Offers</span>
+          </motion.div>
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="text-4xl md:text-5xl font-bold text-gray-900 mb-4"
+          >
+            Premium <span className="bg-gradient-to-r from-pink-600 to-blue-600 bg-clip-text text-transparent">Bulk Deals</span>
+          </motion.h2>
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="text-lg text-gray-600 max-w-3xl mx-auto"
+          >
+            Limited-time exclusive offers for weddings, corporate events and special occasions. Save big when you order in bulk!
+          </motion.p>
         </div>
 
         {/* Offers Grid */}
@@ -129,7 +151,7 @@ Please contact me to discuss further.`,
           {offers.map((offer, i) => (
             <motion.div
               key={offer.id}
-              className="mt-6 bg-white rounded-2xl overflow-hidden border border-gray-200 shadow-lg hover:shadow-xl transition-shadow duration-300 relative"
+              className="mt-6 bg-white rounded-xl overflow-hidden border border-gray-200 shadow-lg hover:shadow-2xl transition-all duration-300 relative group"
               custom={i}
               initial="hidden"
               whileInView="visible"
@@ -140,34 +162,35 @@ Please contact me to discuss further.`,
             >
               {/* Discount Ribbon */}
               {offer.discountPercentage && (
-                <div className="absolute -top-4 -right-4 bg-gradient-to-br from-green-500 to-emerald-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg z-10 transform rotate-6">
-                  <Percent className="w-3 h-3 inline-block mr-1" />
+                <div className="absolute -top-3 -right-3 bg-gradient-to-br from-green-500 to-emerald-600 text-white text-sm font-bold px-4 py-1 rounded-full shadow-xl z-10 transform rotate-12 flex items-center">
+                  <Percent className="w-4 h-4 mr-1 text-white" />
                   {offer.discountPercentage}% OFF
                 </div>
               )}
 
               {/* Marketing Badge */}
               <div
-                className={`absolute top-4 left-4 text-xs font-semibold px-2 py-1 rounded flex items-center shadow-md ${badgeTypes[i % badgeTypes.length].color}`}
+                className={`absolute top-4 left-4 text-xs font-bold px-3 py-1.5 rounded-full flex items-center shadow-lg ${badgeTypes[i % badgeTypes.length].color} z-10`}
               >
                 {badgeTypes[i % badgeTypes.length].icon}
                 {badgeTypes[i % badgeTypes.length].label}
               </div>
 
               {/* Image */}
-              <div className="relative h-64 overflow-hidden rounded-t-2xl">
+              <div className="relative h-64 overflow-hidden rounded-t-xl">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent z-0"></div>
                 <img
                   src={offer.image}
                   alt={offer.title}
-                  className="w-full h-full object-cover object-top transition-transform duration-300 hover:scale-105"
+                  className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110"
                   onError={(e) => {
                     (e.target as HTMLImageElement).src = '/images/placeholder-offer.jpg';
                   }}
                 />
                 {offer.validUntil && (
-                  <div className="absolute bottom-2 left-2 bg-white/90 px-2 py-1 rounded text-xs flex items-center">
-                    <Calendar className="w-3 h-3 mr-1 text-gray-600" />
-                    <span className="text-gray-700">
+                  <div className="absolute bottom-3 left-3 bg-white/90 px-3 py-1.5 rounded-lg text-sm flex items-center shadow-sm">
+                    <Calendar className="w-4 h-4 mr-1.5 text-gray-600" />
+                    <span className="text-gray-700 font-medium">
                       Until {new Date(offer.validUntil).toLocaleDateString()}
                     </span>
                   </div>
@@ -175,20 +198,29 @@ Please contact me to discuss further.`,
               </div>
 
               {/* Content */}
-              <div className="p-5">
-                <h3 className="text-xl font-bold text-gray-900 mb-2">{offer.title}</h3>
-                <p className="text-gray-600 mb-4">{offer.description}</p>
+              <div className="p-6">
+                <div className="flex justify-between items-start mb-3">
+                  <h3 className="text-xl font-bold text-gray-900">{offer.title}</h3>
+                  {offer.pricePerUnit && (
+                    <div className="text-xl font-bold text-gray-900 bg-gray-100 px-3 py-1 rounded-lg">
+                      ₹{offer.pricePerUnit.toLocaleString()}
+                      <span className="text-sm font-normal text-gray-500">/unit</span>
+                    </div>
+                  )}
+                </div>
+                
+                <p className="text-gray-600 mb-5">{offer.description}</p>
 
                 {offer.bestFor && (
-                  <div className="mb-4">
+                  <div className="mb-5">
                     <div className="flex items-center text-sm text-gray-500 mb-2">
-                      <Package className="w-4 h-4 mr-2" />
-                      <span>Perfect for:</span>
+                      <Package className="w-5 h-5 mr-2 text-pink-500" />
+                      <span className="font-medium">Perfect for:</span>
                     </div>
-                    <ul className="space-y-1">
+                    <ul className="space-y-2">
                       {offer.bestFor.map((item, idx) => (
-                        <li key={idx} className="flex items-center text-sm text-gray-600">
-                          <span className="w-1.5 h-1.5 rounded-full bg-green-500 mr-2"></span>
+                        <li key={idx} className="flex items-center text-sm text-gray-700">
+                          <span className="w-2 h-2 rounded-full bg-pink-500 mr-2"></span>
                           {item}
                         </li>
                       ))}
@@ -196,27 +228,22 @@ Please contact me to discuss further.`,
                   </div>
                 )}
 
-                <div className="flex items-center justify-between mb-4">
-                  {offer.minQuantity && (
-                    <div className="flex items-center text-sm bg-gray-100 px-3 py-1 rounded-full">
-                      <Users className="w-4 h-4 mr-1 text-gray-500" />
-                      <span className="text-gray-700">Min. {offer.minQuantity}</span>
-                    </div>
-                  )}
-                  {offer.pricePerUnit && (
-                    <div className="text-lg font-bold text-gray-900">
-                      ₹{offer.pricePerUnit.toLocaleString()}
-                    </div>
-                  )}
-                </div>
+                {offer.minQuantity && (
+                  <div className="flex items-center bg-gray-100 px-4 py-2 rounded-lg mb-5">
+                    <Users className="w-5 h-5 mr-2 text-gray-600" />
+                    <span className="text-sm font-medium text-gray-700">
+                      Minimum order: {offer.minQuantity} units
+                    </span>
+                  </div>
+                )}
 
                 <button
-                  className="w-full flex items-center justify-center bg-gradient-to-r from-gray-900 to-gray-800 hover:from-gray-800 hover:to-gray-700 text-white py-3 px-4 rounded-lg transition-all duration-300 font-medium"
+                  className="w-full flex items-center justify-center bg-gradient-to-r from-pink-600 to-blue-600 hover:from-pink-700 hover:to-blue-700 text-white py-3 px-6 rounded-lg transition-all duration-300 font-semibold shadow-md hover:shadow-lg group-hover:scale-[1.02]"
                   onClick={() => handleOfferClick(offer)}
                 >
-                  <ShoppingCart className="w-5 h-5 mr-2" />
-                  Get This Offer
-                  <ArrowRight className="w-4 h-4 ml-2" />
+                  <ShoppingCart className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
+                  Get This Deal
+                  <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                 </button>
               </div>
             </motion.div>
@@ -224,17 +251,26 @@ Please contact me to discuss further.`,
         </div>
 
         {/* CTA */}
-        <div className="text-center mt-16">
-          <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-            Need a custom solution? We can create personalized offers for your specific requirements.
-          </p>
-          <button
-            className="bg-gradient-to-r from-pink-600 to-pink-500 hover:from-pink-700 hover:to-pink-600 text-white py-3 px-8 rounded-full shadow-lg transition-all duration-300 font-semibold tracking-wide"
-            onClick={handleCustomQuoteClick}
-          >
-            Request Custom Quote
-          </button>
-        </div>
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
+          className="text-center mt-20"
+        >
+          <div className="bg-gradient-to-r from-gray-50 to-white p-8 rounded-2xl border border-gray-200 shadow-sm">
+            <h3 className="text-2xl font-bold text-gray-900 mb-3">Need a custom solution?</h3>
+            <p className="text-gray-600 mb-6 max-w-2xl mx-auto text-lg">
+              We specialize in creating personalized offers tailored to your specific requirements and budget.
+            </p>
+            <button
+              className="bg-gradient-to-r from-pink-600 to-pink-500 hover:from-pink-700 hover:to-pink-600 text-white py-4 px-10 rounded-full shadow-lg transition-all duration-300 font-semibold text-lg tracking-wide hover:shadow-xl hover:scale-105"
+              onClick={handleCustomQuoteClick}
+            >
+              Request Custom Quote
+            </button>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
