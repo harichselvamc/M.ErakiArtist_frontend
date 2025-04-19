@@ -8,6 +8,7 @@ import OrderFormPage from './pages/OrderFormPage';
 import ThankYouPage from './pages/ThankYouPage';
 import ContactPage from './pages/ContactPage';
 import ScrollToTop from './components/utils/ScrollToTop';
+import RedirectToContact from './pages/RedirectToContact'; // 👈 import it
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route path="/order/:productId" element={<OrderFormPage />} />
             <Route path="/thank-you" element={<ThankYouPage />} />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="/go-contact" element={<RedirectToContact />} /> {/* 👈 soft redirect route */}
           </Routes>
         </main>
         <Footer />
@@ -29,5 +31,6 @@ function App() {
     </Router>
   );
 }
+
 
 export default App;
