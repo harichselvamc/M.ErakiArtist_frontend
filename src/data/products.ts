@@ -8,8 +8,8 @@ export const products: Product[] = [
     category: 'invitations',
     price: 1200,
     images: [
-      '/images/admin_product/invitation3.jpg',
       '/images/admin_product/invitation.jpg',
+      '/images/admin_product/invitation3.jpg',
       '/images/admin_product/invitation1.jpg',
     ],
     sizes: [
