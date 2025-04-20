@@ -34,8 +34,8 @@ export const products: Product[] = [
     category: 'wall-art',
     price: 2500,
     images: [
-      '/images/admin_product/acrylic.png',
-      '/images/admin_product/acrylic1.png'
+      '/images/admin_product/acrylic.jpg',
+      '/images/admin_product/acrylic2.jpg'
     ],
     sizes: [
       { id: 'a4', name: 'A4', dimensions: '8.3" x 11.7"', priceModifier: 0 },
@@ -55,7 +55,7 @@ export const products: Product[] = [
     category: 'name-boards',
     price: 1800,
     images: [
-      '/images/admin_product/arabicnameboard.png'
+      '/images/admin_product/arabicnameboard.jpg'
     ],
     sizes: [
       { id: 'small', name: 'Small', dimensions: '10" x 12"', priceModifier: 0 },
@@ -102,11 +102,11 @@ export const products: Product[] = [
     category: 'hampers',
     price: 3500,
     images: [
-      '/images/admin_product/engamenthampers.png',
-      '/images/admin_product/engamenthampers1.png',
-      '/images/admin_product/engamenthampers2.png',
-      '/images/admin_product/engamenthampers3.png',
-      '/images/admin_product/engamenthampers4.png'
+      '/images/admin_product/engamenthampers.jpg',
+      '/images/admin_product/engamenthampers1.jpg',
+      '/images/admin_product/engamenthampers2.jpg',
+      '/images/admin_product/engamenthampers3.jpg',
+  
     ],
     sizes: [
       { id: 'standard', name: 'Standard', dimensions: 'Medium Basket', priceModifier: 0 },
@@ -126,7 +126,7 @@ export const products: Product[] = [
     category: 'hampers',
     price: 2800,
     images: [
-      '/images/admin_product/vanitytrooley.png'
+      '/images/admin_product/vanitytrooley.jpg'
     ],
     sizes: [
       { id: 'standard', name: 'Standard', dimensions: 'Small Trolley', priceModifier: 0 },
@@ -148,8 +148,8 @@ export const products: Product[] = [
     category: 'calligraphy',
     price: 2200,
     images: [
-      '/images/admin_product/arabiccalligraphy.png',
-      '/images/admin_product/arabiccalligraphy1.png'
+      '/images/admin_product/arabiccalligraphy.jpg',
+      '/images/admin_product/arabiccalligraphy1.jpg'
     ],
     sizes: [
       { id: 'a3', name: 'A3', dimensions: '11.7" x 16.5"', priceModifier: 0 },
