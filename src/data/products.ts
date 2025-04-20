@@ -8,9 +8,9 @@ export const products: Product[] = [
     category: 'invitations',
     price: 1200,
     images: [
-      '/images/admin_product/invitation2.png',
-      '/images/admin_product/invitation.png',
-      '/images/admin_product/invitation1.png',
+      '/images/admin_product/invitation2.jpg',
+      '/images/admin_product/invitation.jpg',
+      '/images/admin_product/invitation1.jpg',
     ],
     sizes: [
       { id: 'standard', name: 'Standard', dimensions: '5" x 7"', priceModifier: 0 },
@@ -79,7 +79,7 @@ export const products: Product[] = [
     category: 'gifts',
     price: 1500,
     images: [
-      '/images/admin_product/hijabbouquets.png'
+      '/images/admin_product/hijabbouquets.jpg'
     ],
     sizes: [
       { id: 'standard', name: 'Standard', dimensions: '12" arrangement', priceModifier: 0 },
